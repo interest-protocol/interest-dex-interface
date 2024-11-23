@@ -12,7 +12,7 @@ const SwapPage: NextPage = () => {
   const form = useForm<SwapForm>({
     defaultValues: {
       from: {
-        value: '0',
+        value: '',
         ...FUNGIBLE_ASSETS[Network.Porto].USDT,
         standard: TokenStandard.FA,
       },

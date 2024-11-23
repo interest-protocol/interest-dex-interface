@@ -26,7 +26,7 @@ import {
 } from './coin.types';
 
 export const isAptosCoin = (type: string) =>
-  type.endsWith('1::aptos_coin::AptosCoin');
+  type?.endsWith('1::aptos_coin::AptosCoin');
 
 export const isAptosFA = (type: string) => Number(type) === 0xa;
 

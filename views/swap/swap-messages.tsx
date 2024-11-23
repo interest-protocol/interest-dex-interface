@@ -15,14 +15,14 @@ const SwapMessages: FC = () => {
 
   if (!error) return null;
 
-  const isCustomErrorBoxMessage = [SwapMessagesEnum.leastOneMove].includes(
-    error
-  );
+  const isCustomErrorBoxMessage = [
+    SwapMessagesEnum.leastOneMove,
+    SwapMessagesEnum.greaterThanBalance,
+  ].includes(error);
 
   return (
     <Box
       p="s"
-      mx="xl"
       gap="s"
       display="flex"
       borderRadius="xs"

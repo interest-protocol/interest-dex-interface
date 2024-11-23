@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useDebounce } from 'use-debounce';
 
@@ -11,20 +11,31 @@ import { ZERO_BIG_NUMBER } from '@/utils';
 
 import { SwapForm } from '../swap.types';
 import { getPath } from '../swap.utils';
+import { SwapMessages } from './swap-messages';
 
 const SwapManager: FC = () => {
   const dex = useInterestDex();
   const { control, setValue, getValues } = useFormContext<SwapForm>();
 
   const origin = useWatch({ control, name: 'origin' });
-  const [value] = useDebounce(useWatch({ control, name: 'from.value' }), 800);
+  const [fromValue] = useDebounce(
+    useWatch({ control, name: 'from.value' }),
+    800
+  );
+  const [toValue] = useDebounce(useWatch({ control, name: 'to.value' }), 800);
+
+  const [hasNoMarket, setHasNoMarket] = useState(false);
 
   useEffect(() => {
     setValue('error', null);
 
-    if (!Number(value)) {
+    if (
+      (origin === 'from' && !Number(fromValue)) ||
+      (origin === 'to' && !Number(toValue))
+    ) {
       setValue(`${origin === 'from' ? 'to' : 'from'}.value`, '0');
       setValue(`${origin === 'from' ? 'to' : 'from'}.valueBN`, ZERO_BIG_NUMBER);
+      setHasNoMarket(false);
       return;
     }
 
@@ -37,17 +48,23 @@ const SwapManager: FC = () => {
       from.standard === TokenStandard.COIN
         ? COIN_TYPE_TO_FA[from.type]
         : from.type
-    ).toString();
+    )?.toString();
+
     const tokenOut = (
       to.standard === TokenStandard.COIN ? COIN_TYPE_TO_FA[to.type] : to.type
-    ).toString();
+    )?.toString();
+
+    if (!tokenIn || !tokenOut) return;
 
     const path = getPath(tokenIn, tokenOut).map((address) =>
       address.toString()
     );
 
     const amount = BigInt(
-      FixedPointMath.toBigNumber(value, from.decimals)
+      FixedPointMath.toBigNumber(
+        origin === 'from' ? fromValue : toValue,
+        origin === 'from' ? from.decimals : to.decimals
+      )
         .decimalPlaces(0, 1)
         .toString()
     );
@@ -60,21 +77,24 @@ const SwapManager: FC = () => {
           })
           .then(({ amountOut }) => {
             setValue('path', path);
-            setValue('to.valueBN', BigNumber(amountOut!.toString()));
-            setValue(
-              'to.value',
-              String(
-                FixedPointMath.toNumber(
-                  BigNumber(amountOut!.toString()),
-                  to.decimals
-                )
+
+            const receivedAmountOut = String(
+              FixedPointMath.toNumber(
+                BigNumber(amountOut!.toString()),
+                to.decimals
               )
             );
-            setValue('focus', false);
+
+            if (receivedAmountOut === '0') setHasNoMarket(true);
+            else {
+              setHasNoMarket(false);
+              setValue('to.value', receivedAmountOut);
+              setValue('to.valueBN', BigNumber(amountOut!.toString()));
+              setValue('focus', false);
+            }
           })
           .catch((e) => {
             console.warn(e);
-            setValue('error', 'Failed to quote. Reduce the Swapping amount.');
           })
       : dex
           .quotePathAmountIn({
@@ -83,25 +103,32 @@ const SwapManager: FC = () => {
           })
           .then(({ amountIn }) => {
             setValue('path', path);
-            setValue('from.valueBN', BigNumber(amountIn!.toString()));
-            setValue('focus', false);
-            setValue(
-              'from.value',
-              String(
-                FixedPointMath.toNumber(
-                  BigNumber(amountIn!.toString()),
-                  from.decimals
-                )
+
+            const receivedAmountIn = String(
+              FixedPointMath.toNumber(
+                BigNumber(amountIn!.toString()),
+                from.decimals
               )
             );
+
+            if (receivedAmountIn === '0') setHasNoMarket(true);
+            else {
+              setHasNoMarket(false);
+              setValue('from.value', receivedAmountIn);
+              setValue('from.valueBN', BigNumber(amountIn!.toString()));
+              setValue('focus', false);
+            }
           })
           .catch((e) => {
             console.warn(e);
-            setValue('error', 'Failed to quote. Reduce the Swapping amount.');
           });
-  }, [value]);
+  }, [fromValue, toValue]);
 
-  return null;
+  return (
+    <>
+      <SwapMessages control={control} hasNoMarket={hasNoMarket} />
+    </>
+  );
 };
 
 export default SwapManager;
