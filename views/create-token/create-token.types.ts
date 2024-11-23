@@ -20,6 +20,7 @@ export interface ICreateTokenForm {
   projectUrl?: string;
   fixedSupply: boolean;
   explorerLink: string;
+  executionTime: string;
   pool: ICreateTokenPool;
 }
 

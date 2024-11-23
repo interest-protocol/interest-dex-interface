@@ -27,7 +27,8 @@ const CreateTokenFormButton = () => {
     signTransaction,
     signAndSubmitTransaction,
   } = useAptosWallet();
-  const { control, setValue, reset } = useFormContext<ICreateTokenForm>();
+  const { control, setValue, getValues, reset } =
+    useFormContext<ICreateTokenForm>();
 
   const values = useWatch({ control });
 
@@ -99,6 +100,8 @@ const CreateTokenFormButton = () => {
             ),
           });
 
+      const startTime = Date.now();
+
       if (wallet === 'Razor Wallet') {
         const tx = await signAndSubmitTransaction({ payload });
 
@@ -122,6 +125,10 @@ const CreateTokenFormButton = () => {
           senderAuthenticator,
         });
       }
+
+      const endTime = Date.now() - startTime;
+
+      setValue('executionTime', String(endTime));
 
       await client.waitForTransaction({
         transactionHash: txResult.hash,
@@ -193,7 +200,13 @@ const CreateTokenFormButton = () => {
       }),
       success: () => ({
         title: 'Token Created!',
-        message: <SuccessModal transactionTime={`${0}`}></SuccessModal>,
+        message: (
+          <SuccessModal
+            transactionTime={`${(
+              Number(getValues('executionTime')) / 1000
+            ).toFixed(2)}`}
+          />
+        ),
         primaryButton: {
           label: 'See on Explorer',
           onClick: gotoExplorer,
