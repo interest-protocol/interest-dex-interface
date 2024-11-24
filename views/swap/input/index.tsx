@@ -23,7 +23,7 @@ const Input: FC<InputProps> = ({ label }) => {
     <>
       <HeaderInfo label={label} />
       <Box
-        py="l"
+        pt="l"
         gap="0.5rem"
         display="flex"
         flexDirection="column"

@@ -3,7 +3,9 @@ import { FC, useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useDebounce } from 'use-debounce';
 
+import { TREASURY } from '@/constants';
 import { COIN_TYPE_TO_FA } from '@/constants/coin-fa';
+import { EXCHANGE_FEE_BPS } from '@/constants/fees';
 import { useInterestDex } from '@/hooks/use-interest-dex';
 import { FixedPointMath } from '@/lib';
 import { TokenStandard } from '@/lib/coins-manager/coins-manager.types';
@@ -32,6 +34,19 @@ const SwapManager: FC = () => {
 
     const to = getValues('to');
     const from = getValues('from');
+
+    console.log({ EXCHANGE_FEE_BPS });
+
+    fetch(
+      `https://testnet.mosaic.ag/porto/v1/quote?srcAsset=${from.type}&dstAsset=${to.type}&amount=${from.valueBN.toFixed(0)}&feeInBps=${EXCHANGE_FEE_BPS}&feeReceiver=${TREASURY}&slippage=${getValues('settings.slippage')}`,
+      {
+        headers: {
+          'x-api-key': 'tYPtSqDun-w9Yrric2baUAckKtzZh9U0',
+        },
+      }
+    )
+      .then((res) => res.json?.())
+      .then(console.log);
 
     const tokenIn = (
       from.standard === TokenStandard.COIN

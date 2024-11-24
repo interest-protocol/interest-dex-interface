@@ -2,6 +2,9 @@ import { Network } from '@interest-protocol/aptos-sr-amm';
 
 export const DAY_IN_MS = 1000 * 60 * 60 * 24;
 
+export const TREASURY =
+  '0x9246635e191195a4866d1facb32c1928923ecb12f40f40b231a6d31c1e78480b';
+
 export const MAX_NUMBER_INPUT_VALUE = 9000000000000000;
 
 export const LOCAL_STORAGE_VERSION = 'v5';
