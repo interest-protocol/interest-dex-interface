@@ -13,13 +13,6 @@ export const validationSchema = yup.object({
       [yup.ref('name'), yup.ref('symbol')],
       'The description must be different than the name and symbol'
     ),
-  description: yup
-    .string()
-    .required('You must provide a description')
-    .notOneOf(
-      [yup.ref('name'), yup.ref('symbol')],
-      'The description must be different than the name and symbol'
-    ),
   imageUrl: yup.string(),
   supply: yup
     .number()
