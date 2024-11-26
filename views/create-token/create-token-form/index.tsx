@@ -7,7 +7,6 @@ import { parseInputEventToNumberString } from '@/utils';
 import { ICreateTokenForm } from '../create-token.types';
 import CreateTokenFormButton from './create-token-form-button';
 import CreateTokenFormPool from './create-token-form-pool';
-import CreateTokenFormPreviewImage from './create-token-form-preview-image';
 import CreateTokenFormImage from './create-token-form-upload-image';
 
 const CreateTokenForm: FC = () => {
@@ -46,7 +45,7 @@ const CreateTokenForm: FC = () => {
               nPlaceholder={{ opacity: 0.7 }}
               status={errors.name && 'error'}
               supportingText={errors.name?.message}
-              fieldProps={{ borderRadius: '2xs', height: '3rem' }}
+              fieldProps={{ borderRadius: 'xs', height: '2.8rem' }}
             />
           </Box>
           <Box>
@@ -58,18 +57,19 @@ const CreateTokenForm: FC = () => {
               nPlaceholder={{ opacity: 0.7 }}
               status={errors.symbol && 'error'}
               supportingText={errors.symbol?.message}
-              fieldProps={{ borderRadius: '2xs', height: '3rem' }}
+              fieldProps={{ borderRadius: 'xs', height: '2.8rem' }}
             />
           </Box>
           <Box>
             <TextField
               fontFamily="Proto"
-              label="Description"
-              {...register('description')}
+              label="Project URL"
+              {...register('projectUrl')}
               nPlaceholder={{ opacity: 0.7 }}
-              supportingText={errors.description?.message}
-              placeholder="Some description about the coin"
-              fieldProps={{ borderRadius: '2xs', height: '3rem' }}
+              status={errors.projectUrl && 'error'}
+              placeholder="Eg. https://www.Ruco.com"
+              supportingText={errors.projectUrl?.message}
+              fieldProps={{ borderRadius: 'xs', height: '2.8rem' }}
             />
           </Box>
         </Box>
@@ -77,29 +77,21 @@ const CreateTokenForm: FC = () => {
           <Typography size="large" variant="body">
             2. Add Coin Image
           </Typography>
-          <Box
-            gap="m"
-            display="grid"
-            alignItems="center"
-            gridTemplateColumns="5fr 7rem"
-          >
-            <Box>
-              <TextField
-                type="link"
-                fontFamily="Proto"
-                label="Coin Image URL"
-                {...register('imageUrl')}
-                nPlaceholder={{ opacity: 0.7 }}
-                status={errors.imageUrl && 'error'}
-                placeholder="Eg. https://move.com/images/logo.png"
-                fieldProps={{ borderRadius: '2xs', height: '3rem' }}
-                supportingText={
-                  errors.imageUrl?.message ??
-                  'We recommend to upload an image with 250x250 pixels.'
-                }
-              />
-            </Box>
-            <CreateTokenFormPreviewImage />
+          <Box>
+            <TextField
+              type="link"
+              fontFamily="Proto"
+              label="Coin Image URL"
+              {...register('imageUrl')}
+              nPlaceholder={{ opacity: 0.7 }}
+              status={errors.imageUrl && 'error'}
+              placeholder="Eg. https://move.com/images/logo.png"
+              fieldProps={{ borderRadius: 'xs', height: '2.8rem' }}
+              supportingText={
+                errors.imageUrl?.message ??
+                'We recommend to upload an image with 250x250 pixels.'
+              }
+            />
           </Box>
           <Typography textAlign="center" size="small" variant="body">
             OR
@@ -120,7 +112,7 @@ const CreateTokenForm: FC = () => {
               {...register('decimals')}
               supportingText="Insert the decimal precision of your token. If you don't know what to insert, use 9"
               nPlaceholder={{ opacity: 0.7 }}
-              fieldProps={{ borderRadius: '2xs', height: '3rem' }}
+              fieldProps={{ borderRadius: 'xs', height: '2.8rem' }}
             />
           </Box>
           <Box>
@@ -139,7 +131,7 @@ const CreateTokenForm: FC = () => {
                   setValue('supply', Number(parseInputEventToNumberString(v)));
                 },
               })}
-              fieldProps={{ borderRadius: '2xs', height: '3rem' }}
+              fieldProps={{ borderRadius: 'xs', height: '2.8rem' }}
             />
           </Box>
         </Box>
