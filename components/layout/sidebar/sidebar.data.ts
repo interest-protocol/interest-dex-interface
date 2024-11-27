@@ -22,6 +22,12 @@ export const SIDEBAR_ITEMS: ReadonlyArray<
     disabled: false,
   },
   {
+    Icon: PoolSVG,
+    name: 'Earn',
+    path: Routes[RoutesEnum.Earn],
+    disabled: false,
+  },
+  {
     Icon: CirclePlusSVG,
     name: 'Create Token',
     path: Routes[RoutesEnum.TokenCreate],
