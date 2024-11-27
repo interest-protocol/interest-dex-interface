@@ -41,9 +41,9 @@ const CreateTokenFormButton = () => {
 
   const values = useWatch({ control });
 
-  const onCloseModal = (tryAgain?: boolean) => {
+  const onCloseModal = (resetForm?: boolean) => {
+    if (resetForm) reset();
     handleClose();
-    if (!tryAgain) reset();
   };
 
   const gotoExplorer = () =>
@@ -211,7 +211,7 @@ const CreateTokenFormButton = () => {
           'Your token creation failed, please try again or contact the support team',
         primaryButton: {
           label: 'Try again',
-          onClick: () => onCloseModal(true),
+          onClick: () => onCloseModal(false),
         },
       }),
       success: () => ({
@@ -232,7 +232,7 @@ const CreateTokenFormButton = () => {
             mr="s"
             color="onSurface"
             variant="outline"
-            onClick={() => onCloseModal}
+            onClick={() => onCloseModal(true)}
           >
             got it
           </Button>
