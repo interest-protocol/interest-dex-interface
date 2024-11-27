@@ -68,6 +68,9 @@ const Balance: FC<InputProps> = ({ label }) => {
       `${label}.value`,
       FixedPointMath.toNumber(value, decimals).toString()
     );
+
+    setValue('focus', false);
+
     setValue(`${label}.valueBN`, value);
   };
 
