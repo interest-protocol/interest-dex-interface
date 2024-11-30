@@ -1,14 +1,12 @@
-/**
- * @RoutesEnum is a custom data type
- * @description this data type will help us to uniformize our route names
- */
 export enum RoutesEnum {
   Swap = 'swap',
+  Earn = 'earn',
   Pools = 'pools',
   Analytics = 'analytics',
   PoolCreate = 'pool-create',
   PoolDetails = 'pool-details',
   TokenCreate = 'token-create',
+  EarnDetails = 'earn-details',
 }
 
 /**
@@ -18,8 +16,10 @@ export enum RoutesEnum {
 export const Routes: Record<RoutesEnum, string> = {
   [RoutesEnum.Swap]: '/',
   [RoutesEnum.Pools]: '/pools',
+  [RoutesEnum.Earn]: '/earn',
   [RoutesEnum.Analytics]: '/analytics',
   [RoutesEnum.PoolCreate]: '/pools/create',
   [RoutesEnum.TokenCreate]: '/create-token',
+  [RoutesEnum.EarnDetails]: '/earn/details',
   [RoutesEnum.PoolDetails]: '/pools/details',
 };
