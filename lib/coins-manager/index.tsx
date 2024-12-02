@@ -134,15 +134,17 @@ const CoinsManager: FC = () => {
               coins: coinsPriceType.map(([, type]) => type),
             }),
           }
-        ).then((response) => response.json());
+        )
+          .then((response) => response.json())
+          .catch(() => []);
 
         const coinsWithPrice = coinsPriceType.reduce(
           (acc, [coin], index) => ({
             ...acc,
             [coin]: {
               ...coins[coin],
-              usdPrice: prices[index].price,
-              usdPrice24Change: prices[index].priceChange24HoursPercentage,
+              usdPrice: prices[index]?.price,
+              usdPrice24Change: prices[index]?.priceChange24HoursPercentage,
             },
           }),
           coins
