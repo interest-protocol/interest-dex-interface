@@ -31,6 +31,7 @@ const PoolDetails: FC = () => {
   const handleOptionTab = (index: PoolOption) => setPoolOptionView(index);
 
   const { loading } = usePoolDetails();
+  console.log('Loading', loading);
 
   return (
     <Layout>
