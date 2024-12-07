@@ -1,0 +1,52 @@
+import { Box, Button, Motion, Typography } from '@interest-protocol/ui-kit';
+import { FC } from 'react';
+
+import { ArrowLeftSVG, TimesSVG } from '@/components/svg';
+
+import { FindEarnModalProps } from './find-earn-modal.types';
+import SearchButton from './search-button';
+
+const FindEarnModal: FC<FindEarnModalProps> = ({ closeModal }) => (
+  <Motion
+    layout
+    display="flex"
+    maxHeight="90vh"
+    maxWidth="25rem"
+    overflow="hidden"
+    color="onSurface"
+    borderRadius="xs"
+    bg="lowContainer"
+    flexDirection="column"
+    boxShadow="0 0 5px #3334"
+    transition={{ duration: 0.3 }}
+  >
+    <Box
+      p="m"
+      width="100%"
+      height="5rem"
+      display="grid"
+      alignItems="center"
+      justifyContent="space-between"
+      gridTemplateColumns="2rem auto 2rem"
+    >
+      <Button variant="text" isIcon onClick={closeModal} mr="-0.5rem">
+        <ArrowLeftSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
+      </Button>
+      <Typography variant="title" size="large">
+        Find Earn
+      </Typography>
+      <Button variant="text" isIcon onClick={closeModal} mr="-0.5rem">
+        <TimesSVG maxWidth="1rem" maxHeight="1rem" width="100%" />
+      </Button>
+      <Box />
+    </Box>
+    <Typography variant="title" size="large" p="m">
+      Select coins here
+    </Typography>
+    <Box mx="m" my="m" display="flex" justifyContent="center" borderRadius="xs">
+      <SearchButton closeModal={closeModal} />
+    </Box>
+  </Motion>
+);
+
+export default FindEarnModal;
