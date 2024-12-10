@@ -32,7 +32,7 @@ export type SwapPath = {
 export interface SwapForm {
   to: SwapToken;
   focus: boolean;
-  slider: number;
+  slider: object;
   from: SwapToken;
   loading: boolean;
   swapping: boolean;

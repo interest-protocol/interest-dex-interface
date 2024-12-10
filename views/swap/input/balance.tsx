@@ -62,7 +62,7 @@ const Balance: FC<InputProps> = ({ label }) => {
 
     if (getValues('focus')) setValue('focus', false);
 
-    setValue('slider', 100);
+    setValue('slider', {});
 
     setValue(
       `${label}.value`,

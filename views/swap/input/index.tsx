@@ -57,7 +57,7 @@ const Input: FC<InputProps> = ({ label }) => {
                   ? {}
                   : {
                       onChange: (v: ChangeEvent<HTMLInputElement>) => {
-                        setValue('updateSlider', {});
+                        setValue('slider', {});
                         setValue('origin', label);
                         const value = parseInputEventToNumberString(v);
                         setValue('lock', false);
