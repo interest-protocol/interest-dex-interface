@@ -63,6 +63,7 @@ export { default as InformationCircleSVG } from './information-circle';
 export { default as INRSVG } from './inr';
 export { default as InterestSVG } from './interest';
 export { default as IPXSVG } from './ipx';
+export { default as IPXGoldenSVG } from './ipx-golden';
 export { default as IPXRoundedSVG } from './ipx-rounded';
 export { default as JPYSVG } from './jpy';
 export { default as LinkSVG } from './link';

@@ -5,7 +5,7 @@ import { FC, useCallback, useState } from 'react';
 import { v4 } from 'uuid';
 
 import MenuMobile from '@/components/menu-mobile';
-import { InterestSVG } from '@/components/svg';
+import { IPXGoldenSVG } from '@/components/svg';
 import Wallet from '@/components/wallet';
 import { Routes, RoutesEnum } from '@/constants';
 import useEventListener from '@/hooks/use-event-listener';
@@ -49,7 +49,7 @@ const Header: FC = () => {
               alignItems="center"
               justifyContent="center"
             >
-              <InterestSVG width="100%" maxWidth="100%" maxHeight="100%" />
+              <IPXGoldenSVG width="100%" maxWidth="100%" maxHeight="100%" />
             </Box>
           </Link>
         </Box>
