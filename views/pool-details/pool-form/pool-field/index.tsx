@@ -31,7 +31,7 @@ const PoolField: FC<PoolFieldsProps> = ({ index, poolOptionView }) => {
 
   const token = getValues(fieldName);
 
-  const symbol = token.symbol;
+  const symbol = token?.symbol;
 
   const handleChange = (v: ChangeEvent<HTMLInputElement>) => {
     const amount = parseInputEventToNumberString(v);
@@ -44,7 +44,7 @@ const PoolField: FC<PoolFieldsProps> = ({ index, poolOptionView }) => {
     setValue(`${fieldName}.value`, amount);
     setValue(
       `${fieldName}.valueBN`,
-      FixedPointMath.toBigNumber(amount, token.decimals)
+      FixedPointMath.toBigNumber(amount, token?.decimals)
     );
   };
 
@@ -65,7 +65,7 @@ const PoolField: FC<PoolFieldsProps> = ({ index, poolOptionView }) => {
                 <TokenIcon
                   withBg
                   network={network}
-                  symbol={isDeposit ? symbol : token.name}
+                  symbol={isDeposit ? symbol : token?.name}
                 />
                 {symbol}
               </>

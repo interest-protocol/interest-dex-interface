@@ -7,6 +7,7 @@ import { v4 } from 'uuid';
 import { Routes, RoutesEnum } from '@/constants';
 import { FixedPointMath } from '@/lib';
 
+import { POOL_DATA } from '../pool.data';
 import { LINES } from './pool-card.data';
 import { FormFilterValue, PoolCardProps } from './pool-card.types';
 import PoolCardHeader from './pool-card-header';
@@ -50,8 +51,21 @@ const PoolCard: FC<PoolCardProps> = ({ pool }) => {
           '.arrow-wrapper': { opacity: 1 },
         }}
       >
-        <PoolCardHeader tags={['SR-AMM', FormFilterValue['volatile']]} />
-        <PoolCardInfo coins={pool ? [pool.metadata.x, pool.metadata.y] : []} />
+        <PoolCardHeader
+          tags={[
+            'SR-AMM',
+            FormFilterValue['volatile'],
+            POOL_DATA.filter(
+              ({ poolAddress }) => poolAddress == pool.poolAddress
+            ).length
+              ? 'FARM'
+              : '',
+          ]}
+        />
+        <PoolCardInfo
+          key={v4()}
+          coins={pool ? [pool.metadata.x, pool.metadata.y] : []}
+        />
         <Box px="m" py="xs" bg="surface" borderRadius="1rem">
           {LINES.map((line, index) => (
             <PoolCardTrade

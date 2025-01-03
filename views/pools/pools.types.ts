@@ -52,6 +52,7 @@ export interface IPoolForm {
   tokenList: ReadonlyArray<PoolToken>;
   filterList: ReadonlyArray<FilterItemProps>;
   pool: ISrPool;
+  isEarnPoolView?: boolean;
 }
 
 export interface FilterItemProps {

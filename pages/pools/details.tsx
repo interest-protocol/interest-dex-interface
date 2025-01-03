@@ -37,6 +37,9 @@ const PoolDetailsPage: NextPage<PoolPageProps> = ({ address }) => {
           value: '',
         },
       ],
+      pool: {
+        poolAddress: address,
+      },
       settings: { slippage: '0.1' },
     },
   });
