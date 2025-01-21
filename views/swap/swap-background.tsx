@@ -22,7 +22,7 @@ const MAX_COINS = 10;
 const MAX_ATTEMPTS = 100;
 const VALID_AREAS = [
   { top: 0, bottom: 40, left: 5, right: 25 },
-  { top: 0, bottom: 40, left: 75, right: 95 },
+  { top: 0, bottom: 40, left: 80, right: 80 },
 ];
 const MIN_DISTANCE = 10;
 
@@ -66,7 +66,8 @@ const SwapBackground: FC = () => {
 
   const { exposedCoins } = useExposedCoins();
 
-  const positions: { top: number; left: number }[] = [];
+  const positionsLeft: { top: number; left: number }[] = [];
+  const positionsRight: { top: number; left: number }[] = [];
 
   const onSelect = async (metadata: AssetMetadata) => {
     const [currentToken, opposite] = getValues([label, 'from']);
@@ -109,6 +110,11 @@ const SwapBackground: FC = () => {
         .catch(() => null);
   };
 
+  const coins = exposedCoins.slice(0, MAX_COINS);
+  const half = Math.ceil(coins.length / 2);
+  const leftCoins = coins.slice(0, half);
+  const rightCoins = coins.slice(half);
+
   return (
     <Box
       flex="1"
@@ -116,14 +122,96 @@ const SwapBackground: FC = () => {
       position="absolute"
       display={['none', 'none', 'none', 'block', 'block']}
     >
-      {exposedCoins.slice(0, MAX_COINS).map((token) => {
+      {leftCoins.map((token) => {
         const size = Math.random() * 0.5 + 0.75;
-        const area = VALID_AREAS[Math.random() > 0.5 ? 0 : 1];
-        const position = generatePosition(area, size, positions);
+        const area = VALID_AREAS[0];
+        const position = generatePosition(area, size, positionsLeft);
 
         if (!position) return null;
 
-        positions.push(position);
+        positionsLeft.push(position);
+
+        return (
+          <Motion
+            gap="l"
+            key={v4()}
+            display="flex"
+            cursor="pointer"
+            initial="initial"
+            whileHover="hover"
+            position="absolute"
+            animate={{ y: [-5, 5] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              repeatType: 'mirror',
+            }}
+            onClick={() => onSelect(parseToMetadata(token as MetadataSources))}
+            top={`calc(${position.top}vh)`}
+            left={`calc(${position.left}vw)`}
+          >
+            <Motion
+              scale="1"
+              filter="blur(10px)"
+              variants={{
+                initial: { y: 0 },
+                hover: {
+                  scale: [1, 1.25],
+                  filter: 'blur(0px)',
+                  transition: { duration: 0.3 },
+                },
+              }}
+            >
+              <Motion
+                borderRadius="50%"
+                width={`calc(3rem * ${size})`}
+                height={`calc(3rem * ${size})`}
+                animate={{ rotate: ['-15deg', '15deg'] }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  repeatType: 'mirror',
+                }}
+              >
+                <TokenIcon
+                  withBg
+                  network={network}
+                  url={token.iconUri}
+                  symbol={token.symbol}
+                />
+              </Motion>
+            </Motion>
+            <Motion
+              variants={{
+                hover: { scale: 1 },
+                initial: { scale: 0 },
+              }}
+            >
+              <Typography
+                size="large"
+                variant="body"
+                color="primary"
+                fontWeight="bold"
+              >
+                {token.symbol}
+              </Typography>
+              <Typography size="small" variant="label" color="onSurface">
+                {token.usd}
+              </Typography>
+            </Motion>
+          </Motion>
+        );
+      })}
+
+      {rightCoins.map((token) => {
+        const size = Math.random() * 0.5 + 0.75;
+        const area = VALID_AREAS[1];
+        const position = generatePosition(area, size, positionsRight);
+
+        if (!position) return null;
+
+        positionsRight.push(position);
 
         return (
           <Motion

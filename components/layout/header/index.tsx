@@ -10,6 +10,7 @@ import { Routes, RoutesEnum } from '@/constants';
 import useEventListener from '@/hooks/use-event-listener';
 
 import { SIDEBAR_ITEMS } from '../sidebar/sidebar.data';
+import SwapTopSlider from '../swap-top-slider';
 import LogoWrapper from './logo-wrapper';
 
 const Header: FC = () => {
@@ -38,95 +39,109 @@ const Header: FC = () => {
   return (
     <Box
       display="flex"
-      alignItems="center"
-      py={isMobile ? 'xs' : 's'}
-      px={isMobile ? 'm' : '2xl'}
-      justifyContent="space-between"
+      position="relative"
+      flexDirection="column"
+      bg="rgba(0, 0, 0, 0.2)"
     >
-      {!isMobile ? (
-        <LogoWrapper />
-      ) : (
-        <Box>
-          <Link href={Routes[RoutesEnum.Swap]}>
-            <Box
-              display="flex"
-              color="onSurface"
-              width="2.5rem"
-              height="2.5em"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <IPXGoldenSVG width="100%" maxWidth="100%" maxHeight="100%" />
-            </Box>
-          </Link>
-        </Box>
-      )}
-      {!isMobile && (
-        <Box gap="m" display="flex" alignItems="center" justifyContent="center">
-          {SIDEBAR_ITEMS.map(({ name, path }) => (
-            <Box
-              py="l"
-              px="xs"
-              key={v4()}
-              display="flex"
-              cursor="pointer"
-              height="1.375rem"
-              borderRadius="xs"
-              alignItems="center"
-              alignContent="center"
-              nHover={{ color: 'primary' }}
-              onClick={() => goToPath(path)}
-              transition="all 350ms ease-in-out"
-              opacity={asPath === path ? '1' : '.6'}
-              color={asPath === path ? 'primary' : 'onSurface'}
-            >
-              <Typography
-                size="large"
-                variant="label"
-                color="onSurface"
-                width="max-content"
-                nHover={{
-                  opacity: 0.7,
-                }}
-              >
-                {name}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
-      )}
       <Box
-        top="0"
-        gap="xs"
-        left="0"
-        right="0"
-        zIndex="1"
-        position="relative"
+        width="100%"
+        display="flex"
         alignItems="center"
-        justifyContent="flex-end"
-        gridTemplateColumns="1fr 1fr"
-        display={['none', 'none', 'none', 'flex']}
-      >
-        <Wallet />
-      </Box>
-      <Box
-        p="xs"
-        top="0"
-        gap="xs"
-        zIndex={3}
-        overflowX="auto"
-        position="relative"
-        alignItems="center"
-        px={['m', 'l', 'l', 'xl']}
+        py={isMobile ? 'xs' : 's'}
+        px={isMobile ? 'm' : '2xl'}
         justifyContent="space-between"
-        gridTemplateColumns="1fr 1fr 1fr"
-        display={['flex', 'flex', 'flex', 'none']}
-        boxShadow="0 1.5rem 2.875rem -0.625rem rgba(13, 16, 23, 0.16)"
       >
-        <Box display="flex" alignItems="center">
+        {!isMobile ? (
+          <LogoWrapper />
+        ) : (
+          <Box>
+            <Link href={Routes[RoutesEnum.Swap]}>
+              <Box
+                display="flex"
+                width="2.5rem"
+                height="2.5em"
+                color="onSurface"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <IPXGoldenSVG width="100%" maxWidth="100%" maxHeight="100%" />
+              </Box>
+            </Link>
+          </Box>
+        )}
+        {!isMobile && (
+          <Box
+            gap="m"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {SIDEBAR_ITEMS.map(({ name, path }) => (
+              <Box
+                py="l"
+                px="xs"
+                key={v4()}
+                display="flex"
+                cursor="pointer"
+                height="1.375rem"
+                borderRadius="xs"
+                alignItems="center"
+                alignContent="center"
+                nHover={{ color: 'primary' }}
+                onClick={() => goToPath(path)}
+                transition="all 350ms ease-in-out"
+                opacity={asPath === path ? '1' : '.6'}
+                color={asPath === path ? 'primary' : 'onSurface'}
+              >
+                <Typography
+                  size="large"
+                  variant="label"
+                  color="onSurface"
+                  width="max-content"
+                  nHover={{
+                    opacity: 0.7,
+                  }}
+                >
+                  {name}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        )}
+        <Box
+          top="0"
+          gap="xs"
+          left="0"
+          right="0"
+          zIndex="1"
+          position="relative"
+          alignItems="center"
+          justifyContent="flex-end"
+          gridTemplateColumns="1fr 1fr"
+          display={['none', 'none', 'none', 'flex']}
+        >
           <Wallet />
         </Box>
+        <Box
+          p="xs"
+          top="0"
+          gap="xs"
+          zIndex={3}
+          overflowX="auto"
+          position="relative"
+          alignItems="center"
+          px={['m', 'l', 'l', 'xl']}
+          justifyContent="space-between"
+          gridTemplateColumns="1fr 1fr 1fr"
+          display={['flex', 'flex', 'flex', 'none']}
+          boxShadow="0 1.5rem 2.875rem -0.625rem rgba(13, 16, 23, 0.16)"
+        >
+          <Box display="flex" alignItems="center">
+            <Wallet />
+          </Box>
+        </Box>
       </Box>
+      {asPath === '/' && <SwapTopSlider />}
     </Box>
   );
 };

@@ -16,7 +16,6 @@ const Footer: FC = () => {
 
   return (
     <Box
-      py="xl"
       gap="s"
       px="2xl"
       zIndex={0}

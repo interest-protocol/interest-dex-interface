@@ -10,7 +10,15 @@ const Error: FC<ErrorProps> = ({ message, linkGoTo }) => {
   const { push } = useRouter();
 
   return (
-    <Box color="onSurface" bg="surface" minHeight="100vh">
+    <Box
+      bg="surface"
+      display="flex"
+      color="onSurface"
+      minHeight="100vh"
+      alignItems="center"
+      flexDirection="column"
+      justifyContent="center"
+    >
       <Box width="100%" maxWidth="60rem" position="relative" mx="auto">
         <Motion
           top="22%"

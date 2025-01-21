@@ -13,18 +13,20 @@ const Wallet: FC = () => {
   const { account } = useAptosWallet();
 
   return (
-    <Box gap="s" display="flex" alignItems="center" justifyContent="flex-end">
+    <Box gap="m" display="flex" alignItems="center" justifyContent="flex-end">
       <a
         href={EXTERNAL_FAUCET_URL[Network.Porto]}
         target="_blank"
         rel="noreferrer"
       >
         <Button
-          bg="#FFDA34"
-          color="#000000"
-          variant="filled"
-          px={['xs', 'xs', 's']}
-          nHover={{ bg: 'warning' }}
+          px="m"
+          bg="#1f1f1f"
+          color="#fff"
+          variant="outline"
+          border="1px solid #FFDA34"
+          borderRadius="m"
+          nHover={{ borderColor: '#ffda34ac', bg: '#1f1f1fbe', color: '#fff' }}
         >
           Mint
         </Button>
